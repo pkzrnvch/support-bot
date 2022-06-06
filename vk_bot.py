@@ -1,19 +1,27 @@
 import logging
 import os
 
-from dotenv import load_dotenv
 import vk_api as vk
-from google.cloud import dialogflow
+from dotenv import load_dotenv
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
 
+from utils import get_dialogflow_reply
 
-def echo(event, vk_api):
-    vk_api.messages.send(
-        user_id=event.user_id,
-        message=event.text,
-        random_id=get_random_id()
+
+def vk_dialogflow_reply(event, vk_api):
+    """DialogFLow reply to the user message."""
+    reply_message = get_dialogflow_reply(
+        event.user_id,
+        event.text,
+        fallbacks=False
     )
+    if reply_message:
+        vk_api.messages.send(
+            user_id=event.user_id,
+            message=reply_message,
+            random_id=get_random_id()
+        )
 
 
 def main():
@@ -24,7 +32,7 @@ def main():
     longpoll = VkLongPoll(vk_session)
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-            echo(event, vk_api)
+            vk_dialogflow_reply(event, vk_api)
 
 
 if __name__ == '__main__':

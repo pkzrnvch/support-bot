@@ -1,0 +1,3 @@
+google_cloud_dialogflow==2.14.0
+python_telegram_bot==13.12
+vk_api==11.9.8

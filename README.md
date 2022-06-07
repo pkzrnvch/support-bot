@@ -21,13 +21,14 @@ After creating a project you will get a project id, you will need it along with 
 ## How to install
 - Download project files and create virtual environment.
 - Create an `.env` file in the project directory. Create a new telegram bot through a [BotFather](https://telegram.me/BotFather) and assign its token to `TG_BOT_TOKEN` variable.
-- Send a message to [@UserInfoBot](https://t.me/userinfobot) to get your chat_id, assign it to `TG_LOGS_CHAT_ID` variable to receive log messages. 
+- Send a message to [@UserInfoBot](https://t.me/userinfobot) to get your chat_id, assign it to `TG_LOGS_CHAT_ID` variable to receive log messages.
+- Get your VK group API key from group's settings page and assign it to `VK_GROUP_API_KEY` variable.
 
 Example of an `.env` file:
 ```
 TG_BOT_TOKEN = 'Telegram bot token'
 TG_LOGS_CHAT_ID = 'Telegram chat id to send log messages'
-VK_GROUP_TOKEN = 'VK group token'
+VK_GROUP_API_KEY = 'VK group api key'
 GOOGLE_APPLICATION_CREDENTIALS = 'Path to the JSON key file'
 PROJECT_ID = 'Google project id'
 ```

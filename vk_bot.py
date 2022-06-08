@@ -8,7 +8,8 @@ from google.api_core import exceptions
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
 
-from utils import get_dialogflow_reply, TelegramLogsHandler
+from dialogflow_api import get_dialogflow_reply
+from logs_handler import TelegramLogsHandler
 
 
 logger = logging.getLogger(__name__)
@@ -16,12 +17,10 @@ logger = logging.getLogger(__name__)
 
 def vk_dialogflow_reply(event, vk_api):
     """DialogFLow reply to the user message."""
-    reply_message = get_dialogflow_reply(
+    reply_message, is_fallback = get_dialogflow_reply(
         event.user_id,
-        event.text,
-        fallbacks=False
-    )
-    if reply_message:
+        event.text)
+    if not is_fallback:
         vk_api.messages.send(
             user_id=event.user_id,
             message=reply_message,

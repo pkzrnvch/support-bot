@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from google.api_core import exceptions
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-from utils import get_dialogflow_reply, TelegramLogsHandler
+from dialogflow_api import get_dialogflow_reply
+from logs_handler import TelegramLogsHandler
 
 logger = logging.getLogger(__name__)
 
@@ -18,9 +19,10 @@ def start(update, context):
 def tg_dialogflow_reply(update, context):
     """DialogFLow reply to the user message."""
     try:
-        update.message.reply_text(get_dialogflow_reply(
+        reply_message, is_fallback = get_dialogflow_reply(
             update.effective_user.id,
-            update.message.text))
+            update.message.text)
+        update.message.reply_text(reply_message)
     except exceptions.GoogleAPIError:
         logger.exception('GoogleAPIError')
 

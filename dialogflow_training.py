@@ -36,7 +36,6 @@ def main():
     args = parser.parse_args()
     with open(args.filepath, 'r') as training_file:
         intents_training_dataset = json.load(training_file)
-    print(intents_training_dataset)
     create_intents(intents_training_dataset, project_id)
 
 
